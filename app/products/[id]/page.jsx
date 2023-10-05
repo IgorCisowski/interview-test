@@ -20,3 +20,14 @@ export default async function Product({ params }) {
     </section>
   );
 }
+
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  const posts = await fetch(`https://dummyjson.com/products/${params.id}`).then(
+    (res) => res.json()
+  );
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
