@@ -1,3 +1,5 @@
+import { log } from "console";
+
 const getProduct = async (id) => {
   const res = await fetch(`https://dummyjson.com/products/${id}`);
   return res.json();
@@ -21,13 +23,12 @@ export default async function Product({ params }) {
   );
 }
 
-// Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-  const posts = await fetch(`https://dummyjson.com/products/${params.id}`).then(
-    (res) => res.json()
+  const posts = await fetch("https://dummyjson.com/products").then((res) =>
+    res.json()
   );
 
-  return posts.map((post) => ({
-    slug: post.slug,
+  return posts.products.map((post) => ({
+    id: post.id.toString(),
   }));
 }
